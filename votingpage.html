@@ -71,7 +71,7 @@
 <body>
 <div class="container">
   <h1>Current Election</h1>
-  <div class="timer" id="timer">Election ends in 10:00</div>
+  <div class="timer" id="timer">Election 2024 </div>
 
   <form id="voteForm" method="POST" action="votingpage.php">
     <div class="candidate">
@@ -93,7 +93,7 @@
     </div>
 
     <div class="candidate">
-      <img src="IMAGE.JPG" alt="Candidate Image" />
+      <img src="https://i.pinimg.com/736x/6f/df/bc/6fdfbc41d6a8e26d4b9073bc1afd899f.jpg" alt="Candidate Image" />
       <div class="candidate-info">
         <h2>Candidate 3</h2>
         <p>Party C</p>
@@ -102,7 +102,7 @@
     </div>
 
     <div class="candidate">
-      <img src="IMAGE.jpg" alt="Candidate Image" />
+      <img src="https://cdn.shopify.com/s/files/1/0613/5054/3550/files/how-to-draw-a-cat_480x480.webp?v=1690335501" alt="Candidate Image" />
       <div class="candidate-info">
         <h2>Candidate 4</h2>
         <p>Party D</p>
@@ -116,35 +116,9 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
   // Timer function
-  function startTimer(duration, display) {
-    var timer = duration, minutes, seconds;
-    setInterval(function () {
-      minutes = parseInt(timer / 60, 10);
-      seconds = parseInt(timer % 60, 10);
+  
 
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      seconds = seconds < 10 ? "0" + seconds : seconds;
-
-      display.textContent = "Election ends in " + minutes + ":" + seconds;
-
-      if (--timer < 0) {
-        timer = 0;
-        display.textContent = "Election has ended!";
-        // Disable all vote buttons
-        document.querySelectorAll('.green-button').forEach(button => {
-          button.disabled = true;
-          button.style.backgroundColor = 'grey'; // Change button color to indicate disable state
-          button.onclick = null; // Remove click event
-        });
-      }
-    }, 1000);
-  }
-
-  window.onload = function () {
-    var tenMinutes = 60 * 10,
-      display = document.querySelector('#timer');
-    startTimer(tenMinutes, display);
-  };
+ 
 
   function confirmVote(candidateId) {
     Swal.fire({

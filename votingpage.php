@@ -8,13 +8,7 @@ if (!isset($_SESSION['email'])) {
 }
 
 // Database connection
-$servername = "localhost"; // Replace with your server name
-$username = "root"; // Replace with your database username
-$password = ""; // Replace with your database password
-$dbname = "voting"; // Replace with your database name
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+include 'connect.php';
 
 // Check connection
 if ($conn->connect_error) {
@@ -45,10 +39,24 @@ if ($result->num_rows > 0) {
 // Process the form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['candidate_id'])) {
     $candidate_id = intval($_POST['candidate_id']);
+
+    // Check if the candidate_id exists in the candidates table
+    $stmt = $conn->prepare("SELECT * FROM candidates WHERE id = ?");
+    $stmt->bind_param("i", $candidate_id);
+    $stmt->execute();
+    $candidate_result = $stmt->get_result();
+
+    if ($candidate_result->num_rows == 0) {
+        // Candidate ID does not exist, redirect back with an error message
+        echo '<script>
+        window.location.href = "index.php";
+        alert("Invalid Candidate ID");
+              </script>';
+        exit();
+    }
     
     // Get current timestamp
     $voting_time = date('Y-m-d H:i:s');
-
 
     // Insert the vote into the database only after successful submission
     $stmt = $conn->prepare("INSERT INTO votes (user_email, candidate_id, vote_time) VALUES (?, ?, ?)");
@@ -62,14 +70,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['candidate_id'])) {
         // Redirect the user back to the index page with a success message
         echo '<script>
         window.location.href = "index.php";
-        alert("Sucesfully Voted");
+        alert("Successfully Voted");
               </script>';  
         exit();
     } else {
         // If there's an error while submitting the vote, redirect back with an error message
         echo '<script>
         window.location.href = "index.php";
-        alert("You have already Voted");
+        alert("Error submitting your vote");
               </script>'; 
         exit();
     }
