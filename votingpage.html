@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voting Page</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1f1f1f;
+    color: #fff;
+  }
+  .container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+  h1 {
+    text-align: center;
+  }
+  .candidate {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border: 2px solid rgb(220, 226, 226);
+  }
+  .candidate img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 20px;
+    object-fit: cover;
+  }
+  .candidate-info {
+    flex-grow: 1;
+  }
+  .candidate-info h2 {
+    margin: 0;
+    font-size: 24px;
+  }
+  .green-button {
+    background-color: green;
+    color: white;
+    padding: 8px 16px;
+    border-color: #fff;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: absolute;
+    left: 65%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+  }
+  .green-button1 { top: 30%; }
+  .green-button2 { top: 50%; }
+  .green-button3 { top: 67%; }
+  .green-button4 { top: 85%; }
+  .timer {
+    text-align: center;
+    font-size: 24px;
+    margin: 20px 0;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Current Election</h1>
+  <div class="timer" id="timer">Election ends in 10:00</div>
+
+  <form id="voteForm" method="POST" action="votingpage.php">
+    <div class="candidate">
+      <img src="https://images2.alphacoders.com/646/thumb-1920-646040.jpg" alt="Candidate Image" />
+      <div class="candidate-info">
+        <h2>Candidate 1</h2>
+        <p>Party A</p>
+      </div>
+      <button type="button" onclick="confirmVote(1)" class="green-button green-button1">VOTE</button>
+    </div>
+
+    <div class="candidate">
+      <img src="https://th.bing.com/th/id/OIP.e0WYDKyj7k4OFzgzSFdjiAHaES?rs=1&pid=ImgDetMain.jpg" alt="Candidate Image" />
+      <div class="candidate-info">
+        <h2>Candidate 2</h2>
+        <p>Party B</p>
+      </div>
+      <button type="button" onclick="confirmVote(2)" class="green-button green-button2">VOTE</button>
+    </div>
+
+    <div class="candidate">
+      <img src="IMAGE.JPG" alt="Candidate Image" />
+      <div class="candidate-info">
+        <h2>Candidate 3</h2>
+        <p>Party C</p>
+      </div>
+      <button type="button" onclick="confirmVote(3)" class="green-button green-button3">VOTE</button>
+    </div>
+
+    <div class="candidate">
+      <img src="IMAGE.jpg" alt="Candidate Image" />
+      <div class="candidate-info">
+        <h2>Candidate 4</h2>
+        <p>Party D</p>
+      </div>
+      <button type="button" onclick="confirmVote(4)" class="green-button green-button4">VOTE</button>
+    </div>
+    <input type="hidden" id="candidate_id" name="candidate_id">
+  </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  // Timer function
+  function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+      minutes = parseInt(timer / 60, 10);
+      seconds = parseInt(timer % 60, 10);
+
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+
+      display.textContent = "Election ends in " + minutes + ":" + seconds;
+
+      if (--timer < 0) {
+        timer = 0;
+        display.textContent = "Election has ended!";
+        // Disable all vote buttons
+        document.querySelectorAll('.green-button').forEach(button => {
+          button.disabled = true;
+          button.style.backgroundColor = 'grey'; // Change button color to indicate disable state
+          button.onclick = null; // Remove click event
+        });
+      }
+    }, 1000);
+  }
+
+  window.onload = function () {
+    var tenMinutes = 60 * 10,
+      display = document.querySelector('#timer');
+    startTimer(tenMinutes, display);
+  };
+
+  function confirmVote(candidateId) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You are about to vote for this candidate',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, vote',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+        // Set the value of the hidden input field to the selected candidate ID
+        document.getElementById("candidate_id").value = candidateId;
+        // Submit the form
+        document.getElementById("voteForm").submit
+        ();
+      } else {
+        Swal.fire('Vote canceled', '', 'info');
+      }
+    });
+  }
+</script>
+</body>
+</html>

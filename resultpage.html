@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-language" content="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Election Results</title>
+    <style>
+        /* Base styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        /* Table styling */
+        table {
+            width: 80%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        table th,
+        table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        table th {
+            background-color: #f2f2f2;
+        }
+
+        table img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .total {
+            font-weight: bold;
+            color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Election Results</h1>
+    <table id="resultsTable">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Party</th>
+                <th>Candidate Name</th>
+                <th>Votes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-candidate="John Doe" data-votes="5000">
+                <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqZEhPJopuakJxB4AatwC7Xv5n5peeD0ijhvwcNpT1vkMphznjE5-nL7Q6EoAdkA8Hv28&usqp=CAU" alt="Party A"></td>
+                <td>Party A</td>
+                <td>John Doe</td>
+                <td>5000</td>
+            </tr>
+            <tr data-candidate="Jane Smith" data-votes="6000">
+                <td><img src="https://static.vecteezy.com/system/resources/previews/023/281/377/original/cartoon-cute-lion-animal-free-png.png" alt="Party B"></td>
+                <td>Party B</td>
+                <td>Jane Smith</td>
+                <td>6000</td>
+            </tr>
+            <tr data-candidate="Emily Johnson" data-votes="3000">
+                <td><img src="https://static.vecteezy.com/system/resources/previews/005/294/067/non_2x/cute-lion-cartoon-icon-illustration-animal-flat-cartoon-style-free-vector.jpg" alt="Party C"></td>
+                <td>Party C</td>
+                <td>Emily Johnson</td>
+                <td>3000</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr class="total">
+                <td colspan="3">Total Votes</td>
+                <td>14000</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <script>
+        // Function to sort the table rows by the number of votes
+        function sortTableRows() {
+            const tableBody = document.querySelector('#resultsTable tbody');
+            const rows = Array.from(tableBody.querySelectorAll('tr'));
+
+            rows.sort((a, b) => {
+                const votesA = parseInt(a.getAttribute('data-votes'));
+                const votesB = parseInt(b.getAttribute('data-votes'));
+                return votesB - votesA;
+            });
+
+            // Append sorted rows back to the table body
+            rows.forEach(row => {
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Function to mark the winner
+        function markWinner() {
+            const tableBody = document.querySelector('#resultsTable tbody');
+            const firstRow = tableBody.querySelector('tr');
+            
+            if (firstRow) {
+                firstRow.classList.add('winner');
+            }
+        }
+
+        // Sort the table rows and mark the winner when the page loads
+        sortTableRows();
+        markWinner();
+    </script>
+</body>
+
+</html>
