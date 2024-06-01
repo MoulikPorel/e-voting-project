@@ -103,7 +103,7 @@ $conn->close();
   <div class="container">
     <h1>Welcome to e-Voting</h1>
     <p>Please choose an option:</p>
-    <button class="btn" onclick="window.location.href='/verify-account'">Verify Account</button>
+    <button class="btn" onclick="window.location.href='verifypage.html'">Verify Account</button>
 
     <!-- User Information Card -->
     <div class="card">
