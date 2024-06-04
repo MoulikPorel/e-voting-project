@@ -20,7 +20,7 @@ if (isset($_POST['Full_Name']) && isset($_POST['Voter_ID']) && isset($_POST['Aad
         $photoBlob = addslashes(file_get_contents($photo));
 
         // Check if Voter_ID, Aadhar_Number, or Voter_Serial_Number already exists
-        $sql = "SELECT * FROM VoterInfo WHERE Voter_ID = ? OR Aadhar_Number = ? OR Voter_Serial_Number = ?";
+        $sql = "SELECT * FROM voterinfo WHERE Voter_ID = ? OR Aadhar_Number = ? OR Voter_Serial_Number = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ssi", $voterID, $aadharNumber, $voterSerialNumber);
         $stmt->execute();
