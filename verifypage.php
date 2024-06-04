@@ -31,7 +31,7 @@ if (isset($_POST['Full_Name']) && isset($_POST['Voter_ID']) && isset($_POST['Aad
             echo "Error: An entry with the same Voter ID, Aadhar Number, or Voter Serial Number already exists.";
         } else {
             // Proceed with insert
-            $sql = "INSERT INTO VoterInfo (Full_Name, Voter_ID, Photo_of_Voter_ID, Aadhar_Number, Polling_Station_Code, Voter_Serial_Number) VALUES (?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO voterinfo (Full_Name, Voter_ID, Photo_of_Voter_ID, Aadhar_Number, Polling_Station_Code, Voter_Serial_Number) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("sssssi", $fullName, $voterID, $photoBlob, $aadharNumber, $pollingStationCode, $voterSerialNumber);
 
